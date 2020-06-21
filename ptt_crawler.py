@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Apr  5 12:48:27 2020
+Usage: 
+    Give the words to be crawled in a txt (one word each row) and set "file_name"
+    It can also search multiple words for one term by giving json file and setting "is_list" to False
+    ex: {
+            'TV': ['television', 'TV' , .....]
+        }
 
 @author: Wayne
 """
@@ -8,15 +13,16 @@ Created on Sun Apr  5 12:48:27 2020
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import quote
-from urllib.parse import urlparse
 import json
 import os
-import csv
-import sys
+
 
 file_name = 'test.txt'
 save_path = 'president_ptt'
-is_list = False
+pages_to_crawl_each_word = 6
+is_list = True 
+# True for input txt being one search term on row
+# False for input as a json
 
 mon = {'Jan':'01', 'Feb':'02', 'Mar':'03', 'Apr':'04', 'May':'05', 'Jun':'06',\
        'Jul':'07', 'Aug':'08', 'Sep':'09', 'Oct':'10', 'Nov':'11', 'Dec':'12'}
@@ -44,7 +50,7 @@ def crawl(word):
     keyword = quote(word.encode('utf8'))
     page = 1
     articles = []
-    while page < 6:
+    while page <= pages_to_crawl_each_word:
         url = 'https://www.ptt.cc/bbs/Gossiping/search?page=' + str(page) + '&q=' + keyword
         res = requests.get(url, cookies={'over18': '1'})
         if res.status_code != 200:
