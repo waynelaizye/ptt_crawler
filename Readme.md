@@ -1,4 +1,4 @@
-# PTT Crawler
+PTT Crawler
 
 Usage: 
     Give the words to be crawled in a txt (one word each row) and set "file_name"
