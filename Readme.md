@@ -1,5 +1,7 @@
 # PTT Crawler (PTT爬蟲)
 
+PTT is the largest discussion board in Taiwan. This script crawls the posts on PTT with a clean data format.
+
 ### Usage 
 
 1. Give the words to be crawled in a txt (one word each row) 
@@ -9,19 +11,19 @@
 python ptt_cralwer.py
 ```
 
-It can also search multiple words for one term by giving json file and setting "is_list" to False 
-ex: { 
-        'TV': ['television', 'TV' , .....] 
-    } 
-
 ### Params
 
-* file_name: Specify the text file that contains the keywords to be crawled
-* board: Give the list of boards to be crawled
-* data_after: Set a starting date of posts (ex: '2020/07/20')
-* save_path: The directory name of the output
-* pages_to_crawl_each_word: The maximum pages to be crawled each word
-* is_list: True if the text file is one word each row
+* <b>file_name</b>: Specify the text file that contains the keywords to be crawled
+* <b>board</b>: Give the list of boards to be crawled
+* <b>data_after</b>: Set a starting date of posts (ex: '2020/07/20')
+* <b>save_path</b>: The directory name of the output
+* <b>pages_to_crawl_each_word</b>: The maximum pages to be crawled each word
+* <b>is_list</b>: 
+  * <b>True</b> if the text file is one word each row.
+  * <b>False</b> if need multiple keywords for one topic, (ex:
+  { 
+        'TV': ['television', 'TV' , .....] 
+  }) 
 
 ### Sample output:
 ```json
