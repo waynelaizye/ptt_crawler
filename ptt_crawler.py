@@ -54,7 +54,6 @@ def crawl(word, board = ['Gossiping'], data_after = '2020/01/01'):
     articles = []
     for b in board:
         page = 1
-        print(b)
         while page < pages_to_crawl_each_word:
             url = 'https://www.ptt.cc/bbs/' + b + '/search?page=' + str(page) + '&q=' + keyword
             if b =='Gossiping':
@@ -97,16 +96,14 @@ def crawl(word, board = ['Gossiping'], data_after = '2020/01/01'):
                     for c in comment:
                         if c.find("span",{'class':"hl push-tag"}) == None:
                             dic['comment'].append({'push':c.find("span",{'class':"f1 hl push-tag"}).text,\
-                                                   'text':c.find("span",{'class':"f3 push-content"}).text[1:]})
+                                                   'text':c.find("span",{'class':"f3 push-content"}).text[2:]})
                         else:
                             dic['comment'].append({'push':c.find("span",{'class':"hl push-tag"}).text,\
-                                                   'text':c.find("span",{'class':"f3 push-content"}).text[1:]})
+                                                   'text':c.find("span",{'class':"f3 push-content"}).text[2:]})
                 except:
                     print('Error with', url2)
                 articles.append(dic)
-                print(dic['title'])
             page += 1
-        time.sleep(2)
     return articles
 
 def save_data(articles, word, save_path):
@@ -115,7 +112,7 @@ def save_data(articles, word, save_path):
     print('file name = {0}'.format(word))
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    file = os.path.join(os.getcwd(),save_path,"ptt_" + word + ".json")
+    file = os.path.join(os.getcwd(),save_path, word + ".json")
 
     # save to json....
     with open(file, 'w', encoding='utf-8') as f:
