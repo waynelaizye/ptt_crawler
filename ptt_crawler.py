@@ -9,6 +9,16 @@ Usage:
 
 @author: Wayne
 """
+# Params
+file_name = 'test.txt' # Specify the text file that contains the keywords to be crawled
+board = ['Bank_Service', 'Gossiping', 'Finance', 'Stock'] # Give the list of boards to be crawled
+data_after = '2020/04/01' # Set a starting date of posts (ex: '2020/07/20')
+save_path = 'fubon' # The directory name of the output
+pages_to_crawl_each_word = 10 # The maximum pages to be crawled each word
+is_list = True
+# True if the text file is one word each row.
+# False if need multiple keywords for one topic, (ex: { 'TV': ['television', 'TV' , .....] })
+
 
 import requests
 from bs4 import BeautifulSoup
@@ -16,15 +26,6 @@ from urllib.parse import quote
 import json
 import os
 import time
-
-board = ['Bank_Service', 'Gossiping', 'Finance', 'Stock']
-data_after = '2020/04/01'
-file_name = 'test.txt'
-save_path = 'fubon'
-pages_to_crawl_each_word = 10
-is_list = True
-# True for input txt being one search term on row
-# False for input as a json
 
 mon = {'Jan':'01', 'Feb':'02', 'Mar':'03', 'Apr':'04', 'May':'05', 'Jun':'06',\
        'Jul':'07', 'Aug':'08', 'Sep':'09', 'Oct':'10', 'Nov':'11', 'Dec':'12'}
@@ -96,10 +97,10 @@ def crawl(word, board = ['Gossiping'], data_after = '2020/01/01'):
                     for c in comment:
                         if c.find("span",{'class':"hl push-tag"}) == None:
                             dic['comment'].append({'push':c.find("span",{'class':"f1 hl push-tag"}).text,\
-                                                   'text':c.find("span",{'class':"f3 push-content"}).text})
+                                                   'text':c.find("span",{'class':"f3 push-content"}).text[1:]})
                         else:
                             dic['comment'].append({'push':c.find("span",{'class':"hl push-tag"}).text,\
-                                                   'text':c.find("span",{'class':"f3 push-content"}).text})
+                                                   'text':c.find("span",{'class':"f3 push-content"}).text[1:]})
                 except:
                     print('Error with', url2)
                 articles.append(dic)
